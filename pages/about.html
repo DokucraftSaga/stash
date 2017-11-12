@@ -1,0 +1,135 @@
+<div class="fill"><h2>About</h2><p>DokuStash is a collection of Dokucraft TSC textures. The stash makes it easier to find textures that has been made for the project. Unfortunately, not every texture is here because of various reaons, the most common two being that the texture was deleted before it could be added or that the texture was not posted in the forum thread in the normal fashion.</p><h2>File names</h2><p>File names follow the format: <code>&lt;Contributor Name&gt;_&lt;ID&gt;.png</code>, for example <code>CCCode_17590.png</code></p><p>An ID is a number unique to that file. It is based on the number of images posted before it in the forum thread, but can seem a bit random since not all images in the thread are textures (screenshots for example are filtered out) or added to the stash. Since they are based on the number of images before them, if <code>file X</code> has a lower ID number than <code>file Y</code>, it means that <code>file X</code> was posted before <code>file Y</code>. The stash browser has timestamps of some of the IDs and can estimate when a texture was posted based on that. However, because there are only a few timestamps the estimated dates may be off by a bit in some cases.</p><h2>Statistics</h2><div class="graph"><canvas id="stash-size-over-time"></canvas></div><div class="graph"><canvas id="stash-growth-per-quarter"></canvas></div></div><script>(() => {
+  // Gather time data
+  let firstID = Infinity
+  let lastID = -Infinity
+  let timeData = {}
+  for (let i = 0; i < stash.files.all.length; i++) {
+    let id = getID(stash.files.all[i])
+    firstID = Math.min(firstID, id)
+    lastID = Math.max(lastID, id)
+
+    let d = new Date(getApproxTime(id) * 1000)
+    let quarter = d.getFullYear() + ' Q' + Math.floor((d.getMonth() + 3) / 3)
+    timeData[quarter] = (timeData[quarter] || 0) + 1
+  }
+
+  // Fill any gaps in the time data
+  let firstDate = new Date(getApproxTime(firstID) * 1000)
+  let lastDate = new Date(getApproxTime(lastID) * 1000)
+  let firstYear = firstDate.getFullYear()
+  let lastYear = lastDate.getFullYear()
+  for (let year = firstDate.getFullYear(); year <= lastYear; year++) {
+    let start = year != firstYear ? 1 : Math.floor((firstDate.getMonth() + 3) / 3)
+    let end = year != lastYear ? 4 : Math.floor((lastDate.getMonth() + 3) / 3)
+    for (let i = start; i <= end; i++) {
+      timeData[year + ' Q' + i] = timeData[year + ' Q' + i] || 0
+    }
+  }
+
+  // Sort year quarters
+  let quarters = []
+  for (quarter in timeData) if (timeData.hasOwnProperty(quarter)) {
+    quarters.push(quarter)
+  }
+  quarters.sort(naturalSorter)
+
+  let chartOptions = {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [
+      {
+        id:'xAxis1',
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          callback: label => label.split(' ')[1]
+        }
+      },
+      {
+        id:'xAxis2',
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          callback: label => ~label.indexOf('Q1') || quarters.indexOf(label) == 0 ? label.split(' ')[0] : ''
+        }
+      }
+      ],
+      yAxes: [{
+        gridLines: {
+          color: '#333'
+        },
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    tooltips: {
+      bodyFontSize: 16,
+      footerFontSize: 0,
+      callbacks: {
+        label: item => '    ' + item.yLabel,
+        title: () => '',
+        footer: () => ' '
+      },
+      custom: tooltip => {
+        if (!tooltip) return;
+        tooltip.displayColors = false
+      }
+    }
+  }
+
+  new Chart('stash-size-over-time', {
+    type: 'line',
+    options: $.extend({}, chartOptions, {
+      title: {
+        display: true,
+        text: 'Total number of files in DokuStash'
+      }
+    }),
+    data: {
+      labels: quarters,
+      datasets: [{
+        data: quarters.map(e => timeData[e]).reduce((r, a) => {
+          r.push((r.length && r[r.length - 1] || 0) + a)
+          return r
+        }, []),
+        xAxisID:'xAxis1',
+        backgroundColor: 'rgba(85, 136, 255, 0.2)',
+        borderColor: '#58f',
+        pointHoverBorderColor: '#fff',
+        borderWidth: 2,
+        pointRadius: 5,
+        lineTension: 0
+      }]
+    }
+  })
+
+  new Chart('stash-growth-per-quarter', {
+    type: 'line',
+    options: $.extend({}, chartOptions, {
+      title: {
+        display: true,
+        text: 'Number of files added per quarter'
+      }
+    }),
+    data: {
+      labels: quarters,
+      datasets: [{
+        data: quarters.map(e => timeData[e]),
+        xAxisID:'xAxis1',
+        backgroundColor: 'rgba(85, 136, 255, 0.2)',
+        borderColor: '#58f',
+        pointHoverBorderColor: '#fff',
+        borderWidth: 2,
+        pointRadius: 5,
+        lineTension: 0
+      }]
+    }
+  })
+
+})()</script>

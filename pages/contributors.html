@@ -1,0 +1,67 @@
+<div class="fill"><h2>Contributors</h2><i>This lists only contributors with at least one texture in the stash. Also, some contributors might go by multiple different names due to name changes on MCF.</i><div class="center"><table class="sortable" id="contributors-table"><tr><th>Name</th><th title="Number of contributions in the stash">#</th><th>Top category</th><th title="Estimated date of the first contribution in the stash">First contribution</th></tr></table></div></div><script>for (let i = 0; i < stash.contributors.length; i++) {
+  let c = stash.contributors[i]
+  let contributions = stash.files.all.filter(contributorFilter(c))
+
+  let categories = {none:0}
+  let firstID = Infinity
+  for (let j = 0; j < contributions.length; j++) {
+    let category = getCategory(contributions[j])
+    categories[category] = (categories[category] || 0) + 1
+    firstID = Math.min(firstID, getID(contributions[j]))
+  }
+
+  let topCategory = 'none'
+  for (let category in categories) if (categories.hasOwnProperty(category)) {
+    if (categories[category] > categories[topCategory]) topCategory = category
+  }
+
+  $('#contributors-table').append(
+    $('<tr>').append(
+      $('<td>', {class:'link', text:c, title:`Click to see more information about ${c}`}).on('click', e => {
+        $('#category-input').val('')
+        $('#contributor-input').val('')
+        $('#id-input').val('')
+        $('#size-input').val('')
+        $('#color-picker-toggle').prop('checked', false).change()
+
+        showProfile(c, () => {
+          history.pushState(null, '', toURLParams({profile: c}))
+        })
+        e.preventDefault()
+      })
+    ).append(
+      $('<td>', {class:'link', text:contributions.length, title:`Click to see all textures by ${c}`}).on('click', e => {
+        $('#category-input').val('')
+        $('#contributor-input').val(c)
+        $('#id-input').val('')
+        $('#size-input').val('')
+        $('#color-picker-toggle').prop('checked', false).change()
+
+        search(null, c)
+        history.pushState(null, '', toURLParams({contributor: c}))
+        e.preventDefault()
+      })
+    ).append(
+      $('<td>', {class:'link', text:topCategory, title:`Click to see textures in ${topCategory} by ${c}<br><br><i>${categories[topCategory]} files</i>`}).on('click', e => {
+        $('#category-input').val(topCategory)
+        $('#contributor-input').val(c)
+        $('#id-input').val('')
+        $('#size-input').val('')
+        $('#color-picker-toggle').prop('checked', false).change()
+
+        search(topCategory, c)
+        history.pushState(null, '', toURLParams({category: topCategory, contributor: c}))
+        e.preventDefault()
+      })
+    ).append(
+      $('<td>', {text:formatDate(getApproxTime(firstID)), sorttable_customkey:firstID})
+    )
+  )
+}
+sorttable.makeSortable($('#contributors-table')[0])
+for (let i = 0; i < 2; i++)
+  sorttable.innerSortFunction.apply($('#contributors-table th:nth-of-type(2)')[0], [])
+tippy('#contributors-table th,#contributors-table td', {
+  arrow: true,
+  animation: 'perspective'
+})</script>
