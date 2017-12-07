@@ -1,0 +1,277 @@
+<div class="fill full-height" id="submit-page"><h2>Submit Textures</h2><a id="login-status">Logging in...</a><p class="short">This page is for contributors. From here you can submit textures to the stash. The textures will be reviewed manually before being added and will not show up in the stash before they are approved.</p><br/><h2>Add and sort files</h2><p><i>Each file must be less than 2 MBs.</i></p><div class="button inline" onclick="$(&quot;#file-input&quot;)[0].click()">Browse local files</div><span> or simply drag or paste images here.</span><br/><br/><p class="short">To sort files into categories, select one or more files by clicking on them, then choose a category to sort them into and click 'Sort selected'. If you make a mistake you can sort a file again after putting it back into the unsorted list by clicking on it.</p><i>All files must be sorted before you can submit them.</i><br/><br/><div class="text-input tt" title="&lt;h3&gt;Category name&lt;/h3&gt;&lt;br&gt;&lt;i&gt;Must match name exactly&lt;/i&gt;"><input id="sorter-category-input" type="text" spellcheck="false" placeholder="Category"/><span></span></div><div class="button inline tt" id="select-category-button" title="Select category from list">...</div><div class="button inline" id="sort-selected-button">Sort selected</div><div class="button inline" onclick="$(&quot;#unsorted-files .selected&quot;).removeClass(&quot;selected&quot;)">Deselect all</div><div class="button inline" onclick="$(&quot;#unsorted-files .selected&quot;).remove()">Remove selected</div><br/><h3>Unsorted files</h3><div id="unsorted-files"></div><div class="content" id="sorted-files"></div><h2>Submit for approval</h2><p class="short">Before you submit the textures, you need to enter the name of the contributor who made them below. The files will be renamed to follow the format <code>&lt;Contributor Name&gt;_&lt;ID&gt;.png</code> before being added to the stash and this is where the name is used.</p><br/><div class="text-input tt" title="&lt;h3&gt;Contributor name&lt;/h3&gt;&lt;br&gt;&lt;i&gt;Only autocompletes names of contributors that already have textures in the stash; if your name is not in the list, just ignore it.&lt;/i&gt;"><input id="sorter-name-input" type="text" spellcheck="false" placeholder="Name"/><span></span></div><div class="button inline" id="submit-button">Submit</div><span id="submit-status"></span><input id="file-input" type="file" accept=".png" style="visibility:hidden;" multiple="multiple"/></div><script>(() => {
+
+  let gh = null
+  let fileContents = []
+
+  let addFile = (name, type, content) => {
+    fileContents.push(content.replace(/^data:image\/png;base64,/, ''))
+
+    let preview = $('<div>', {class:'file-preview', title:type ? `<h3>${name}</h3><i>${type}</i>` : `<h3>${name}</h3>`})
+      .append($('<div>', {class:'img'}).css('background-image', `url(${content})`))
+      .attr('data-file-content', fileContents.length - 1)
+      .on('click', e => {
+        if (preview.is('.sorted')) {
+          let group = preview.parent()
+          preview.removeClass('sorted').detach().appendTo($('#unsorted-files'))
+          if (group.find('.file-preview').length == 0) group.remove()
+          return
+        }
+        if (preview.is('.selected')) {
+          preview.removeClass('selected')
+        } else {
+          preview.addClass('selected')
+        }
+      })
+
+    tippy(preview[0], {
+      arrow: true,
+      animation: 'perspective',
+      position: 'right'
+    })
+
+    let img = new Image()
+    img.onload = () => { if (img.width < 128 && img.height < 128) {
+      preview.addClass('pixelated')
+    }}
+    img.src = content
+
+    // Fullscreen button
+    preview.append(
+      $('<div>', {
+        class: 'fullscreen-button',
+        title: 'Fullscreen'
+      }).on('click', e => {
+        $('#fullscreen-cover').removeClass('hidden').css('background-image', `url(${content}), url(resources/transparent.png)`)
+        e.stopPropagation()
+      })
+    )
+    tippy(preview[0].children[1], {
+      arrow: true,
+      animation: 'perspective'
+    })
+
+    $('#unsorted-files').append(preview)
+  }
+
+  let loggedIn = () => {
+    if (gh == null) return;
+    gh.getUser().getProfile().then(response => {
+      let profile = response.data
+      $('#login-status').addClass('logged-in')
+        .text('Logged in as ' + (profile.name || profile.login))
+        .on('click', () => {
+          localStorage.removeItem('gh-login-token')
+          goToPage('login')
+        })
+    })
+
+    $('#file-input').on('change', () => {
+      let input = $('#file-input')[0]
+      for (let i = 0; i < input.files.length; i++) {
+        let file = input.files[i]
+        if (file.size / 1048576 > 2) continue; // Block files that are >2MB
+        let fr = new FileReader()
+        fr.onload = () => {
+          addFile(file.name.replace(/\.png$/, ''), 'Local file', fr.result)
+        }
+        fr.readAsDataURL(file)
+      }
+    })
+
+    let pasteImage = evt => {
+      let items = (evt.clipboardData || evt.originalEvent.clipboardData).items;
+      for (i in items) if (items.hasOwnProperty(i)) {
+        let item = items[i]
+        if (item.type === 'image/png') {
+          let file = item.getAsFile()
+          if (file.size / 1048576 > 2) continue; // Block files that are >2MB
+          let fr = new FileReader()
+          fr.onload = evt => {
+            addFile('Image from clipboard', null, fr.result)
+          }
+          fr.readAsDataURL(file)
+        }
+      }
+    }
+    $(document).on('paste', pasteImage)
+
+    $('#submit-page').on('drop', evt => {
+      evt.stopPropagation()
+      evt.preventDefault()
+
+      let files = evt.originalEvent.dataTransfer.files
+      if (!files) return;
+      for (i in files) if (files.hasOwnProperty(i)) {
+        let file = files[i]
+        if (file.type === 'image/png' && file.size / 1048576 <= 2) { // Block files that are >2MB
+          let fr = new FileReader()
+          fr.onload = evt => {
+            addFile(file.name.replace(/\.png$/, ''), 'Local file', fr.result)
+          }
+          fr.readAsDataURL(file)
+        }
+      }
+    })
+
+    $('#submit-page').on('dragover', evt => {
+      evt.stopPropagation()
+      evt.preventDefault()
+    })
+
+    // Select category from list button
+    $('#select-category-button').on('click', () => {
+      $('#submit-page').hide()
+      removeAllTooltips()
+
+      let wrapper = $('<div>', {class:'fill'}).append($('<h2>').text('Choose a category')).appendTo($('#content'))
+      let categoryList = $('<div>', {class:'content'}).appendTo(wrapper)
+
+      for (let i = 0; i < stash.categories.length; i++) {
+        let c = stash.categories[i]
+        let categoryDiv = $('<a>', {class:'category button'})
+
+        categoryDiv.on('click', e => {
+          wrapper.remove()
+          $('#sorter-category-input').val(c)
+          $('#submit-page').show()
+        })
+        categoryDiv.append(
+          $('<div>', {class:'img b-lazy'}).attr('data-src', `/stash/resources/category-icons/${c}.png`).append(
+            $('<div>', {class:'spinner-container'}).append($('<div>', {class:'spinner'}))
+          )
+        )
+        categoryDiv.append($('<p>', {text:c}))
+
+        categoryList.append(categoryDiv)
+      }
+      bLazy.revalidate()
+      window.scrollTo(0, 0)
+    })
+
+    // Sort selected files button
+    $('#sort-selected-button').on('click', () => {
+      let category = $('#sorter-category-input').val()
+      if (!~stash.categories.indexOf(category)) return;
+
+      let files = $('#unsorted-files .selected')
+      if (files.length == 0) return;
+
+      let group = $(`#sorted-files .group[data-category-name="${category}"]`)
+      if (group.length == 0) {
+        group = $('<div>', {class:'group'}).append($('<h3>', {text:category}))
+        group.attr('data-category-name', category)
+        $('#sorted-files').append(group)
+      }
+      for (var i = 0; i < files.length; i++)
+        $(files[i]).removeClass('selected').addClass('sorted').detach().appendTo(group)
+    })
+
+    // Submit button
+    $('#submit-button').on('click', () => {
+      $('#submit-status').text('').removeClass('bad').removeClass('good')
+      
+      if (!$('#unsorted-files').is(':empty')) {
+        $('#submit-status').text('All files must be sorted before submitting.').addClass('bad').removeClass('good')
+        return
+      }
+      if ($('#sorted-files').is(':empty')) {
+        $('#submit-status').text('No files to submit.').addClass('bad').removeClass('good')
+        return
+      }
+      if ($('#sorter-name-input').val().length == 0) {
+        $('#submit-status').text('Contributor name required.').addClass('bad').removeClass('good')
+        return
+      }
+      if (!$('#sorter-name-input').val().match(/^[-_0-9a-zÀ-ÿ ]+$/i)) {
+        let m = /[^-_0-9a-zÀ-ÿ ]/i.exec($('#sorter-name-input').val())
+        $('#submit-status').text(`Invalid character in contributor name: ${m[0]}`).addClass('bad').removeClass('good')
+        return
+      }
+
+      let els = $('#sorted-files .file-preview')
+      let files = []
+      for (var i = 0; i < els.length; i++) {
+        let content = fileContents[$(els[i]).attr('data-file-content')]
+        // Block files that are >2MB, base64 encoding means the size is one third larger
+        if (content.length / 1048576 > 2 / .75) {
+          $('#submit-status').text('One or more files exceed 2MB, submission cancelled.').addClass('bad').removeClass('good')
+          return
+        }
+        files.push({
+          content: content,
+          category: $(els[i]).parent().attr('data-category-name')
+        })
+      }
+
+      let issue = gh.getIssues('DokucraftSaga', 'stash')
+      issue.createIssue({
+        title: '!addfiles',
+        body: '@DokucraftSaga\n' + JSON.stringify({
+          contributor: $('#sorter-name-input').val(),
+          files: files
+        })
+      }).then(response => {
+        if (response.status < 300) {
+          $('#sorted-files .group').remove()
+          $('#submit-status').text('Textures submitted.').addClass('good').removeClass('bad')
+        } else {
+          $('#submit-status').text(`Failed to submit textures. (${response.status} ${response.statusText})`).addClass('bad').removeClass('good')
+        }
+      })
+    })
+
+    new Awesomplete($('#sorter-category-input')[0], {
+      list: stash.categories,
+      autoFirst: true,
+      minChars: 1,
+      sort: bestMatchSort($('#sorter-category-input'))
+    })
+
+    new Awesomplete($('#sorter-name-input')[0], {
+      list: stash.contributors,
+      autoFirst: true,
+      sort: bestMatchSort($('#sorter-name-input'))
+    })
+
+    tippy('#content .fill .tt', {
+      position: 'right',
+      arrow: true,
+      hideOnClick: false,
+      animation: 'perspective'
+    })
+
+    pageCleanup = () => {
+      $(document).off('paste', pasteImage)
+    }
+  }
+
+  // Check if the user is logged in
+  if (localStorage.getItem('gh-login-token') != null) {
+    gh = new GitHub({token:localStorage.getItem('gh-login-token')})
+    loggedIn()
+    return
+  }
+
+  let params = getURLParams()
+  if (params != null) {
+    if (params.hasOwnProperty('token')) {
+      gh = new GitHub({token:params.token})
+      localStorage.setItem('gh-login-token', params.token)
+      loggedIn()
+      return
+    }
+
+    if (params.hasOwnProperty('code')) {
+      $.getJSON('https://dokustash-gatekeeper.herokuapp.com/authenticate/'+params.code, data => {
+        gh = new GitHub({token: data.token})
+        localStorage.setItem('gh-login-token', data.token)
+        loggedIn()
+      })
+      return
+    }
+  }
+
+  // No auth token, login required
+  goToPage('login')
+
+})()</script>
