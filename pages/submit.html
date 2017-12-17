@@ -53,17 +53,14 @@
     $('#unsorted-files').append(preview)
   }
 
-  let loggedIn = () => {
+  let loggedIn = (username) => {
     if (gh == null) return;
-    gh.getUser().getProfile().then(response => {
-      let profile = response.data
-      $('#login-status').addClass('logged-in')
-        .text('Logged in as ' + (profile.name || profile.login))
-        .on('click', () => {
-          localStorage.removeItem('gh-login-token')
-          goToPage('login')
-        })
-    })
+    $('#login-status').addClass('logged-in')
+      .text('Logged in as ' + username)
+      .on('click', () => {
+        localStorage.removeItem('gh-login-token')
+        goToPage('login')
+      })
 
     $('#file-input').on('change', () => {
       let input = $('#file-input')[0]
@@ -246,30 +243,46 @@
     }
   }
 
-  // Check if the user is logged in
-  if (localStorage.getItem('gh-login-token') != null) {
-    gh = new GitHub({token:localStorage.getItem('gh-login-token')})
-    loggedIn()
-    return
-  }
-
+  // Check if the user is logging in with a new token or code
   let params = getURLParams()
   if (params != null) {
     if (params.hasOwnProperty('token')) {
       gh = new GitHub({token:params.token})
-      localStorage.setItem('gh-login-token', params.token)
-      loggedIn()
+      gh.getUser().getProfile().catch(reason => {
+        localStorage.removeItem('gh-login-token')
+        goToPage('login')
+      }).then(response => {
+        localStorage.setItem('gh-login-token', params.token)
+        loggedIn(response.data.name || response.data.login)
+      })
       return
     }
 
     if (params.hasOwnProperty('code')) {
       $.getJSON('https://dokustash-gatekeeper.herokuapp.com/authenticate/'+params.code, data => {
         gh = new GitHub({token: data.token})
-        localStorage.setItem('gh-login-token', data.token)
-        loggedIn()
+        gh.getUser().getProfile().catch(reason => {
+          localStorage.removeItem('gh-login-token')
+          goToPage('login')
+        }).then(response => {
+          localStorage.setItem('gh-login-token', data.token)
+          loggedIn(response.data.name || response.data.login)
+        })
       })
       return
     }
+  }
+
+  // Check if the user is already logged in
+  if (localStorage.getItem('gh-login-token') != null) {
+    gh = new GitHub({token:localStorage.getItem('gh-login-token')})
+    gh.getUser().getProfile().catch(reason => {
+      localStorage.removeItem('gh-login-token')
+      goToPage('login')
+    }).then(response => {
+      loggedIn(response.data.name || response.data.login)
+    })
+    return
   }
 
   // No auth token, login required
