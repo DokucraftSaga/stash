@@ -248,12 +248,14 @@
   if (params != null) {
     if (params.hasOwnProperty('token')) {
       gh = new GitHub({token:params.token})
-      gh.getUser().getProfile().catch(reason => {
-        localStorage.removeItem('gh-login-token')
-        goToPage('login')
-      }).then(response => {
-        localStorage.setItem('gh-login-token', params.token)
-        loggedIn(response.data.name || response.data.login)
+      gh.getUser().getProfile((err, result) => {
+        if (err) {
+          localStorage.removeItem('gh-login-token')
+          goToPage('login')
+        } else {
+          localStorage.setItem('gh-login-token', params.token)
+          loggedIn(result.name || result.login)
+        }
       })
       return
     }
@@ -261,12 +263,14 @@
     if (params.hasOwnProperty('code')) {
       $.getJSON('https://dokustash-gatekeeper.herokuapp.com/authenticate/'+params.code, data => {
         gh = new GitHub({token: data.token})
-        gh.getUser().getProfile().catch(reason => {
-          localStorage.removeItem('gh-login-token')
-          goToPage('login')
-        }).then(response => {
-          localStorage.setItem('gh-login-token', data.token)
-          loggedIn(response.data.name || response.data.login)
+        gh.getUser().getProfile((err, result) => {
+          if (err) {
+            localStorage.removeItem('gh-login-token')
+            goToPage('login')
+          } else {
+            localStorage.setItem('gh-login-token', data.token)
+            loggedIn(result.name || result.login)
+          }
         })
       })
       return
@@ -276,11 +280,13 @@
   // Check if the user is already logged in
   if (localStorage.getItem('gh-login-token') != null) {
     gh = new GitHub({token:localStorage.getItem('gh-login-token')})
-    gh.getUser().getProfile().catch(reason => {
-      localStorage.removeItem('gh-login-token')
-      goToPage('login')
-    }).then(response => {
-      loggedIn(response.data.name || response.data.login)
+    gh.getUser().getProfile((err, result) => {
+      if (err) {
+        localStorage.removeItem('gh-login-token')
+        goToPage('login')
+      } else {
+        loggedIn(result.name || result.login)
+      }
     })
     return
   }
