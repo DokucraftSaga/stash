@@ -1,4 +1,4 @@
-<div class="fill"><h2>Contributors</h2><i>This lists only contributors with at least one texture in the stash. Also, some contributors might go by multiple different names due to name changes on MCF.</i><div class="center"><table class="sortable" id="contributors-table"><tr><th>Name</th><th title="Number of contributions in the stash">#</th><th>Top category</th><th title="Estimated date of the first contribution in the stash">First contribution</th></tr></table></div></div><script>(() => {
+<div class="fill"><h2>Contributors</h2><i>This lists only contributors with at least one texture in the stash. Also, some contributors might go by multiple different names due to name changes on MCF.</i><div class="center"><table class="sortable" id="contributors-table"><tr><th>Name</th><th title="Number of contributions in the stash">#</th><th>Top category</th><th title="Date of the first contribution in the stash">First contribution</th><th title="Date of the last contribution in the stash">Last contribution</th></tr></table></div></div><script>(() => {
   if (!stash.cache.contributorList) {
     stash.cache.contributorList = []
     for (let i = 0; i < stash.contributors.length; i++) {
@@ -6,11 +6,15 @@
       let contributions = stash.files.all.filter(contributorFilter(c))
 
       let categories = {none:0}
-      let firstID = Infinity
+      let firstPostTime = Infinity
+      let lastPostTime = -Infinity
       for (let j = 0; j < contributions.length; j++) {
         let category = getCategory(contributions[j])
         categories[category] = (categories[category] || 0) + 1
-        firstID = Math.min(firstID, getID(contributions[j]))
+
+        let postTime = stash.data[contributions[j]].T || getApproxTime(getID(contributions[j]))
+        firstPostTime = Math.min(firstPostTime, postTime)
+        lastPostTime = Math.max(lastPostTime, postTime)
       }
 
       let topCategory = 'none'
@@ -23,7 +27,8 @@
         contributionsCount: contributions.length,
         topCategory: topCategory,
         topCategoryCount: categories[topCategory],
-        firstID: firstID
+        firstPostTime: firstPostTime,
+        lastPostTime: lastPostTime
       })
     }
   }
@@ -70,7 +75,9 @@
           e.preventDefault()
         })
       ).append(
-        $('<td>', {text:formatDate(getApproxTime(c.firstID)), sorttable_customkey:c.firstID})
+        $('<td>', {text:formatDate(c.firstPostTime), sorttable_customkey:c.firstPostTime})
+      ).append(
+        $('<td>', {text:formatDate(c.lastPostTime), sorttable_customkey:c.lastPostTime})
       )
     )
   }

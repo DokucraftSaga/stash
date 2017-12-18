@@ -1,21 +1,21 @@
 <div class="fill"><h2>About</h2><p>DokuStash is a collection of Dokucraft TSC textures. The stash makes it easier to find textures that has been made for the project. Unfortunately, not every texture is here because of various reaons, the most common two being that the texture was deleted before it could be added or that the texture was not posted in the forum thread in the normal fashion.</p><h2>File names</h2><p>File names follow the format: <code>&lt;Contributor Name&gt;_&lt;ID&gt;.png</code>, for example <code>CCCode_17590.png</code></p><p>An ID is a number unique to that file. It is based on the number of images posted before it in the forum thread, but can seem a bit random since not all images in the thread are textures (screenshots for example are filtered out) or added to the stash. Since they are based on the number of images before them, if <code>file X</code> has a lower ID number than <code>file Y</code>, it means that <code>file X</code> was posted before <code>file Y</code>. The stash browser has timestamps of some of the IDs and can estimate when a texture was posted based on that. However, because there are only a few timestamps the estimated dates may be off by a bit in some cases.</p><h2>Statistics</h2><div class="graph"><canvas id="stash-size-over-time"></canvas></div><div class="graph"><canvas id="stash-growth-per-quarter"></canvas></div></div><script>(() => {
   // Gather time data
-  let firstID = Infinity
-  let lastID = -Infinity
+  let firstPostTime = Infinity
+  let lastPostTime = -Infinity
   let timeData = {}
   for (let i = 0; i < stash.files.all.length; i++) {
-    let id = getID(stash.files.all[i])
-    firstID = Math.min(firstID, id)
-    lastID = Math.max(lastID, id)
+    let postTime = stash.data[stash.files.all[i]].T || getApproxTime(getID(stash.files.all[i]))
+    firstPostTime = Math.min(firstPostTime, postTime)
+    lastPostTime = Math.max(lastPostTime, postTime)
 
-    let d = new Date(getApproxTime(id) * 1000)
+    let d = new Date(postTime * 1000)
     let quarter = d.getFullYear() + ' Q' + Math.floor((d.getMonth() + 3) / 3)
     timeData[quarter] = (timeData[quarter] || 0) + 1
   }
 
   // Fill any gaps in the time data
-  let firstDate = new Date(getApproxTime(firstID) * 1000)
-  let lastDate = new Date(getApproxTime(lastID) * 1000)
+  let firstDate = new Date(firstPostTime * 1000)
+  let lastDate = new Date(lastPostTime * 1000)
   let firstYear = firstDate.getFullYear()
   let lastYear = lastDate.getFullYear()
   for (let year = firstDate.getFullYear(); year <= lastYear; year++) {
