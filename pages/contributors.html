@@ -75,9 +75,9 @@
           e.preventDefault()
         })
       ).append(
-        $('<td>', {text:formatDate(c.firstPostTime), sorttable_customkey:c.firstPostTime})
+        $('<td>', {class:'no-extra-padding', text:formatDate(c.firstPostTime), sorttable_customkey:c.firstPostTime})
       ).append(
-        $('<td>', {text:formatDate(c.lastPostTime), sorttable_customkey:c.lastPostTime})
+        $('<td>', {class:'no-extra-padding', text:formatDate(c.lastPostTime), sorttable_customkey:c.lastPostTime})
       )
     )
   }
