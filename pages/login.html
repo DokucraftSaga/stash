@@ -1,5 +1,1 @@
-<div class="fill"><h2>Login</h2><p>You need to be logged in to submit textures to the stash.</p><br/><a class="button inline" href="https://github.com/login/oauth/authorize?client_id=9e518ac1f88b8d4b9e51&amp;scope=public_repo">Login with GitHub</a></div><script>(() => {
-
-  if (localStorage.getItem('gh-login-token') != null) goToPage('submit')
-
-})()</script>
+<div class="fill"><h2>Login</h2><p>You need to be logged in to submit textures to the stash.</p><br/><a class="button inline" href="https://github.com/login/oauth/authorize?client_id=9e518ac1f88b8d4b9e51&amp;scope=public_repo">Login with GitHub</a></div><script>null!=localStorage.getItem("gh-login-token")&&goToPage("submit");</script>
