@@ -1,1 +1,1 @@
-{"assets":{"minecraft":{"models":{"block":{"normal_torch.json":16485,"normal_torch_wall.json":17450}},"textures":{"blocks":{"torch_on.png":21280,"torch_on.png.mcmeta":21}}}},"pack.mcmeta":122}
+{"assets":{"minecraft":{"models":{"block":{"normal_torch.json":17915,"normal_torch_wall.json":17401},"item":{"torch.json":17795}},"textures":{"blocks":{"torch.png":1455,"torch_on.png":21280,"torch_on.png.mcmeta":21}}}}}
