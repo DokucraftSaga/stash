@@ -1,1 +1,0 @@
-null!=localStorage.getItem("gh-login-token")&&goToPage("submit");
