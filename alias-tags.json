@@ -42,6 +42,7 @@
   "rocket": "\"firework\"",
   "snowman": "snow golem",
   "tag": "dog-tag",
+  "texture-sheet": "terrain-sheet|item-sheet",
   "tnt": "\"dynamite\"",
   "tool": "pickaxe|shovel|axe|hoe|shears|scythe|flint-and-steel|drill|paintbrush|sickle|chisel|scraper|hammer|paint-roller|lighter|bug-net|wrench|frying-pan|chainsaw|fishing-rod",
   "water-lily": "lily-pad",
