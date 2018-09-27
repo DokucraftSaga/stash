@@ -48,5 +48,6 @@
   "weapon": "melee-weapon|bow|crossbow|pistol|wand|boomerang|shuriken|bomb|grenade|rifle",
   "wearable": "armor|belt|cape|batpack|ring|necklace|backpack|medal|crown",
   "weather": "rain",
+  "wood": "oak|dark-oak|birch|jungle-wood|acacia|spruce",
   "zombie": "drowned"
 }
