@@ -21,7 +21,7 @@
   "Clay":"clay",
   "Command Blocks":"command-block",
   "Crafting Tables":"crafting-table",
-  "CTM":"ctm",
+  "CTM":"ctm|ctm-sheet",
   "Decoration":"decoration|painting|banner|plant-pot|carpet|(frame !metal)|curtain",
   "Discs":"disc",
   "Doors":"door|trapdoor",
