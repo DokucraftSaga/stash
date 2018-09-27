@@ -21,10 +21,10 @@
     // For ZIP files, the dimensions of the thumbnail image is used instead.
     "S": [<width>, <height>]
 
-    // T - Time
+    // D - Timestamp
     // Epoch time of when the file was submitted to the stash.
     // Older files does not have this, but the time can be approximated with IDs.
-    "T": <epoch time>
+    "D": <epoch time>
 
     // M - MCMETA
     // This property is set to 1 if the image or thumbnail image has MCMETA.
@@ -39,5 +39,9 @@
     //   "cit" - CIT
     //   "set" - Texture Set
     "Z": "<file type>"
+
+    // T - Tags
+    // String with file tags separated by commas. Example: "gold,helmet,item"
+    "T": "<file tags>"
   }
 }
