@@ -11,7 +11,7 @@
   "drinkware": "bottle|mug|jar|wine-glass|jug|teacup|goblet",
   "dust": "blaze-powder|gun-powder|\"powder\"",
   "dye": "cocoa-beans|ink-sac",
-  "dynamite": "tnt",
+  "dynamite": "\"tnt\"",
   "egg": "turtle-egg",
   "entity": "!item !block mob|minecart|boat|tunnel-bore|player-skin|elytra",
   "feline": "cat|ocelot",
