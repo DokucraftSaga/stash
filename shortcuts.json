@@ -84,5 +84,5 @@
   "Villagers":"villager",
   "Weather":"weather",
   "Wood":"wood !item !entity",
-  "Wool":"wool"
+  "Wool":"wool|carpet"
 }
