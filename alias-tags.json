@@ -40,7 +40,7 @@
   "pelt": "\"fur\"",
   "pig": "wild-boar",
   "pistol": "\"handgun\"",
-  "plant": "pumpkin|nether-wart|water-lily|sugar-cane|chorus-plant|(stem !mushroom)|(grass !block)|flower|vine|(melon|wheat|carrot|potato !item)|sapling|beet-plant|cabbage|cannabis",
+  "plant": "!gui pumpkin|nether-wart|water-lily|sugar-cane|chorus-plant|(stem !mushroom)|(grass !block)|flower|vine|(melon|wheat|carrot|potato !item)|sapling|beet-plant|cabbage|cannabis",
   "powder": "blaze-powder|gun-powder|\"dust\"",
   "rocket": "\"firework\"",
   "snowman": "snow golem",
