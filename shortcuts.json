@@ -60,7 +60,7 @@
   "Obsidian & Bedrock":"obsidian|bedrock",
   "Ocean Plants":"coral|kelp|sea-grass",
   "Orbs":"heart-of-the-sea|ender-eye|ender-pearl|fire-charge",
-  "Ore Blocks":"block emerald|diamond|redstone|lapis",
+  "Ore Blocks":"block emerald|diamond|redstone|lapis !ore",
   "Ores":"ore",
   "Other":"untagged",
   "Particle Effects":"particle-effect",
