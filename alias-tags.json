@@ -42,6 +42,7 @@
   "mod": "metallurgy|biomes-o-plenty|enhances-biomes|aether|progressive-automation|better-foliage|highlands|balkon-s-weapon-mod|equivalent-exchange|buildcraft|blood-magic|ender-storage|industrialcraft|thaumcraft|better-than-wolves|millenaire|railcraft|red-power|botania|immersive-engineering|tinkers-construct|forestry|power-converters",
   "monster": "ghast|guardian|shulker|phantom|vex|dragon|blaze|skeleton|zombie|magma-cube|silverfish|endermite|enderman|creeper|(slime !block !item)|wither|spider",
   "necklace": "tag",
+  "orb": "ender-pearl|ender-eye",
   "pelt": "\"fur\"",
   "pig": "wild-boar",
   "pistol": "\"handgun\"",
