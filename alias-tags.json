@@ -49,6 +49,7 @@
   "plant": "!gui pumpkin|nether-wart|water-lily|sugar-cane|chorus-plant|(stem !mushroom)|(grass !block)|flower|vine|(melon|wheat|carrot|potato !item)|sapling|beet-plant|cabbage|cannabis",
   "powder": "blaze-powder|gun-powder|\"dust\"",
   "rocket": "\"firework\"",
+  "sea-grass": "tall-seagrass",
   "snowman": "snow golem",
   "tag": "dog-tag",
   "tear": "\"droplet\"",
