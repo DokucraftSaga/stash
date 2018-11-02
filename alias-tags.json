@@ -18,7 +18,7 @@
   "entity": "!item !block mob|minecart|boat|tunnel-bore|player-skin|elytra",
   "feline": "cat|ocelot",
   "firework": "\"rocket\"",
-  "fish": "salmon|cod|pufferfish|clownfish",
+  "fish": "salmon|cod|pufferfish|clownfish|tropical-fish",
   "flower": "lavender|rose|sunflower|tulip|peony|lilac|oxeye-daisy|poppy|blue-orchid|allium",
   "food": "(item berry|chorus-fruit|carrot|potato|fish|melon|cabbage)|meat|(fruit !chorus-fruit !melon)|beet|cake|cookie|bell-pepper|sugar|pie|broccoli|eggplant|onion|cucumber|cauliflower|bread|cheese|leek",
   "fruit": "grapes|apple|strawberry|banana|melon|avocado|pineapple|kiwi|lemon|chorus-fruit",
