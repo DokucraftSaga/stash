@@ -25,7 +25,7 @@
   "fur": "\"pelt\"",
   "handgun": "\"pistol\"",
   "gemstone": "diamond|ruby|emerald|topaz|sapphire|quartz",
-  "gui": "chest-gui|player-inventory|health-bar|armor-bar|achievement-background|xp-bar|dispenser-gui|furnace-gui|boss-health-bar|villager-gui|brewing-stand-gui|crafting-table-gui|beacon-gui|anvil-gui|hopper-gui|hunger-bar|horse-gui|enchanting-table-gui|advancements-widgets",
+  "gui": "chest-gui|player-inventory|health-bar|armor-bar|achievement-background|xp-bar|dispenser-gui|furnace-gui|boss-health-bar|villager-gui|brewing-stand-gui|crafting-table-gui|beacon-gui|anvil-gui|hopper-gui|hunger-bar|horse-gui|enchanting-table-gui|advancements-widgets|grindstone-gui|loom-gui|blast-furnace-gui|cartography-table-gui|smoker-gui|stonecutter-gui",
   "helmet": "armor-set",
   "illager": "evoker|illusioner|vindicator",
   "item": "tool|weapon|gem|shield|\"helmet\"|\"boots\"|\"chestplate\"|\"leggings\"|\"armor-set\"|stick|blaze-rod|heart-of-the-sea|ender-eye|ender-pearl|fire-charge|dye|seed|(powder !block)|meat",
