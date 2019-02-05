@@ -39,7 +39,7 @@
   "melee-weapon": "sword|scepter|dagger|lance|spear|claw|glaive|flail|mace|tonfa|staff|axe|trident",
   "metal": "gold|iron|copper|silver|tin",
   "mob": "!item !block monster|illager|villager|animal|minion|insect|golem",
-  "mod": "metallurgy|biomes-o-plenty|enhances-biomes|aether|progressive-automation|better-foliage|highlands|balkon-s-weapon-mod|equivalent-exchange|buildcraft|blood-magic|ender-storage|industrialcraft|thaumcraft|better-than-wolves|millenaire|railcraft|red-power|botania|immersive-engineering|tinkers-construct|forestry|power-converters",
+  "mod": "metallurgy|biomes-o-plenty|enhances-biomes|aether|progressive-automation|better-foliage|highlands|balkon-s-weapon-mod|equivalent-exchange|buildcraft|blood-magic|ender-storage|industrialcraft|thaumcraft|better-than-wolves|millenaire|railcraft|red-power|botania|immersive-engineering|tinkers-construct|forestry|power-converters|just-enough-items",
   "monster": "ghast|guardian|shulker|phantom|vex|dragon|blaze|skeleton|zombie|magma-cube|silverfish|endermite|enderman|creeper|(slime !block !item)|wither|spider",
   "necklace": "tag",
   "orb": "ender-pearl|ender-eye",
