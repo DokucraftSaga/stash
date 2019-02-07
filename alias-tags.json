@@ -1,7 +1,7 @@
 {
   "animal": "llama|polar-bear|cow|dog|(bird|rabbit !meat)|sheep|bat|fish|donkey|horse|mule|mooshroom|pig|squid|turtle|dolphin|feline|deer",
   "armor": "armor-set|\"helmet\"|\"chestplate\"|\"leggings\"|\"boots\"|\"gauntlets\"",
-  "berry": "blueberry|raspberry",
+  "berry": "blueberry|raspberry|sweet-berry",
   "bird": "parrot|chicken",
   "block": "log|planks|marble|dirt|gravel|sand",
   "boots": "armor-set",
