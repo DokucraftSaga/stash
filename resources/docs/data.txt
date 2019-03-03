@@ -4,18 +4,6 @@
   // Keys are Filenames with paths relative to the stash root. Example: Swords/CCCode_9000.png
   "<filename>": {
 
-    // P - Palette
-    // Array of six notable colors:
-    //   0: Vibrant
-    //   1: Light Vibrant
-    //   2: Dark Vibrant
-    //   3: Muted
-    //   4: Light Muted
-    //   5: Dark Muted
-    // Values are strings of the color hex code. Example: "5588ff"
-    // Images may not have a color for each slot. In such a case, the value for those slots are 0 (integer).
-    "P": [...]
-
     // S - Size
     // Dimensions of image, in pixels. Example: [32, 64]
     // For ZIP files, the dimensions of the thumbnail image is used instead.
