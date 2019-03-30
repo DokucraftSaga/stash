@@ -4,21 +4,25 @@
   // Keys are Filenames with paths relative to the stash root. Example: Swords/CCCode_9000.png
   "<filename>": {
 
+    // P - Parents / Source files
+    // Array of IDs of files that this file is based on.
+    "P": [<file IDs>],
+
     // S - Size
     // Dimensions of image, in pixels. Example: [32, 64]
     // For ZIP files, the dimensions of the thumbnail image is used instead.
-    "S": [<width>, <height>]
+    "S": [<width>, <height>],
 
-    // D - Timestamp
+    // D - Date / Timestamp
     // Epoch time of when the file was submitted to the stash.
     // Older files does not have this, but the time can be approximated with IDs.
-    "D": <epoch time>
+    "D": <epoch time>,
 
     // M - MCMETA
     // This property is set to 1 if the image or thumbnail image has MCMETA.
-    "M": 1
+    "M": 1,
 
-    // Z - Zip
+    // Z - Zip / Package Type
     // Only set for ZIP files.
     // The type of ZIP file. Example: "model"
     // Valid values:
@@ -26,7 +30,7 @@
     //   "ctm" - CTM
     //   "cit" - CIT
     //   "set" - Texture Set
-    "Z": "<file type>"
+    "Z": "<file type>",
 
     // T - Tags
     // String with file tags separated by commas. Example: "gold,helmet,item"
