@@ -5,7 +5,7 @@
   "<filename>": {
 
     // P - Parents / Source files
-    // Array of IDs of files that this file is based on.
+    // Array of IDs of files or names of things that this file is based on.
     "P": [<file IDs>],
 
     // S - Size
@@ -34,6 +34,11 @@
 
     // T - Tags
     // String with file tags separated by commas. Example: "gold,helmet,item"
-    "T": "<file tags>"
+    "T": "<file tags>",
+
+    // F - Fullscreen / Sketchfab ID
+    // Only for model files.
+    // A Sketchfab model ID.
+    "F": "<model ID>"
   }
 }
