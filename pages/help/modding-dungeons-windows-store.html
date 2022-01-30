@@ -1,28 +1,15 @@
-<h2>How to set up Minecraft Dungeons for modding (Windows Store version)</h2><p>The Windows Store version of Minecraft Dungeons normally won't let you modify its files/folders. To get around this issue, follow these steps:</p><h3>Prerequisites</h3><ul><li><p>Temporarily disable any antivirus software. Most will detect that an unknown script is being run and try to stop it.</p></li><li><p>If you use Bitdefender, you need to uninstall it before continuing, as it breaks the script even when turned off.</p></li><li><p>Make sure you have at least 10 GBs of space free.</p></li><li><p>Make sure your game is up to date. To do this, press Win + R, enter <code>ms-windows-store://DownloadsAndUpdates/</code> and press enter. Then, press "Get updates" in the top right corner of the window that opens.</p></li><li><p>Install <a href="https://aka.ms/vs/16/release/vc_redist.x64.exe">Visual C++ Redist</a>. Even if you think you have it installed, try the installer. You may have an older version that won't work.</p></li></ul><h3>Setup</h3><ol><li><p>Click the Windows icon in the bottom left corner and enter <code>powershell</code> then click "<span class="warning">Run as Administrator</span>"</p></li><li><p>Paste this command into PowerShell and press enter:<div class="row"><div class="button inline sp-mcd-win-store-copy-button">Copy Command</div><div class="sp-mcd-win-store-command inline" style="max-width: 600px;overflow-x:auto;"></div></div></p></li><li><p>It might ask you about an "Execution Policy Change" - Just press A and then Enter. In some languages, the key you need to press might be different. It should be the one next to "Yes to all".</p></li><li><p>You will be asked to select a folder. Choose an empty folder where you want the game to be moved to. Do not choose a folder in Program Files or One Drive, it will break things.</p></li></ol><p class="warning"><b>The game will open at one point. Do not close it when this happens. If you run into any issues, make sure to check the Troubleshooting section below.</b></p><ol start="5"><li><p>A <code>~mods</code> folder will appear. This is where you place your mods.</p></li><li><p>Launching the modded game is just like launching the regular game. You can do it from the start menu, Windows Store, Xbox app, and so on, just like you normally do. Do <b>NOT</b> try to launch it by running the .exe files in the game folder.</p></li></ol><br/><br/><hr/><br/><h3>Troubleshooting</h3><p>If you run into any issues while/after patching the game, some of these things might help you.</p><ul><li><p>If the game didn't open at all while patching and the patching didn't work, try opening the game manually before running the patcher. Keep the game open until it either closes by itself or the patcher finishes.</p></li><li><p>If you get an error saying it can't verify your ownership of the game, you must have launched the game using the .exe file. Don't do that. Run the game from the start menu, Windows Store, or Xbox app. If you did, but still get this error, reinstall the regular game and log in at least once (open the game and select a character) before patching it.</p></li></ul><script>const MCD_WIN_STORE_CMD = 'Set-ExecutionPolicy -Scope Process Bypass;mkdir C:\\mcdtemp; Invoke-WebRequest -Uri "https://dokucraft.co.uk/stash/resources/docs/DungeonsInstallScript.ps1" -OutFile C:\\mcdtemp\\winstore.ps1; C:\\mcdtemp\\winstore.ps1'
+<h2>How to set up Minecraft Dungeons for modding (Windows Store version)</h2><p>The Windows Store version of Minecraft Dungeons normally won't let you modify its files/folders. To get around this issue, follow these steps:</p><h3>Prerequisites</h3><ul><li><p>Temporarily disable any antivirus software. Most will detect that an unknown script is being run and try to stop it.</p></li><li><p>If you use Bitdefender, you need to uninstall it before continuing, as it breaks the script even when turned off.</p></li><li><p>Make sure you have at least 10 GBs of space free.</p></li><li><p>Make sure your game is up to date. To do this, press Win + R, enter <code>ms-windows-store://DownloadsAndUpdates/</code> and press enter. Then, press "Get updates" in the top right corner of the window that opens.</p></li><li><p>Install <a href="https://aka.ms/vs/16/release/vc_redist.x64.exe">Visual C++ Redist</a>. Even if you think you have it installed, try the installer. You may have an older version that won't work.</p></li></ul><h3>Setup</h3><ol><li><p>Click the Windows icon in the bottom left corner and enter <code>powershell</code> then click "<span class="warning">Run as Administrator</span>"</p></li><li><p>Paste this command into PowerShell and press enter:<div class="row"><div class="button inline sp-mcd-win-store-copy-button">Copy Command</div><div class="sp-mcd-win-store-command inline" style="max-width: 600px;overflow-x:auto;"></div></div></p></li><li><p>It might ask you about an "Execution Policy Change" - Just press A and then Enter. In some languages, the key you need to press might be different. It should be the one next to "Yes to all".</p></li><li><p>You will be asked to select a folder. Choose an empty folder where you want the game to be moved to. Do not choose a folder in Program Files or One Drive, it will break things.</p></li></ol><p class="warning"><b>The game will open at one point. Do not close it when this happens. If you run into any issues, make sure to check the Troubleshooting section below.</b></p><ol start="5"><li><p>A <code>~mods</code> folder will appear. This is where you place your mods.</p></li><li><p>Launching the modded game is just like launching the regular game. You can do it from the start menu, Windows Store, Xbox app, and so on, just like you normally do. Do <b>NOT</b> try to launch it by running the .exe files in the game folder.</p></li></ol><br/><br/><hr/><br/><h3>Troubleshooting</h3><p>If you run into any issues while/after patching the game, some of these things might help you.</p><ul><li><p>If the game didn't open at all while patching and the patching didn't work, try opening the game manually before running the patcher. Keep the game open until it either closes by itself or the patcher finishes.</p></li><li><p>If you get an error saying it can't verify your ownership of the game, you must have launched the game using the .exe file. Don't do that. Run the game from the start menu, Windows Store, or Xbox app. If you did, but still get this error, reinstall the regular game and log in at least once (open the game and select a character) before patching it.</p></li></ul><script>{
+  const MCD_WIN_STORE_CMD = 'Set-ExecutionPolicy -Scope Process Bypass;mkdir C:\\mcdtemp; Invoke-WebRequest -Uri "https://dokucraft.co.uk/stash/resources/docs/DungeonsInstallScript.ps1" -OutFile C:\\mcdtemp\\winstore.ps1; C:\\mcdtemp\\winstore.ps1'
 
-CCInput($('.sp-mcd-win-store-command'), {
-  readonly: true,
-  default: MCD_WIN_STORE_CMD
-})
+  CCInput($('.sp-mcd-win-store-command'), {
+    readonly: true,
+    default: MCD_WIN_STORE_CMD
+  })
 
-$('.sp-mcd-win-store-copy-button').on('click', evt => {
-  $('#clipboard-input').val(MCD_WIN_STORE_CMD).select()
-  document.execCommand('Copy')
-  const popup = stash.notify('Command copied to clipboard.', 'working')
-  setTimeout(() => stash.dismissNotification(popup), 3000)
-})
-/*
-const MCD_WIN_STORE_UPDATE_CMD = 'Set-ExecutionPolicy -Scope Process Bypass;mkdir C:\\mcdtemp; Invoke-WebRequest -Uri "https://docs.dungeonsworkshop.net/installscript/installscript.ps1" -OutFile C:\\mcdtemp\\winstore.ps1; C:\\mcdtemp\\winstore.ps1 update'
-
-CCInput($('.sp-mcd-win-store-update-command'), {
-  readonly: true,
-  default: MCD_WIN_STORE_UPDATE_CMD
-})
-
-$('.sp-mcd-win-store-update-copy-button').on('click', evt => {
-  $('#clipboard-input').val(MCD_WIN_STORE_UPDATE_CMD).select()
-  document.execCommand('Copy')
-  const popup = stash.notify('Command copied to clipboard.', 'working')
-  setTimeout(() => stash.dismissNotification(popup), 3000)
-})
-*/</script>
+  $('.sp-mcd-win-store-copy-button').on('click', evt => {
+    $('#clipboard-input').val(MCD_WIN_STORE_CMD).select()
+    document.execCommand('Copy')
+    const popup = stash.notify('Command copied to clipboard.', 'working')
+    setTimeout(() => stash.dismissNotification(popup), 3000)
+  })
+}</script>
