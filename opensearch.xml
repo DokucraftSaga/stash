@@ -2,6 +2,6 @@
 <ShortName>DokuStash</ShortName>
 <Description>The home of Dokucraft TSC textures.</Description>
 <InputEncoding>UTF-8</InputEncoding>
-<Image width="16" height="16" type="image/x-icon">https://dokucraft.co.uk/stash/favicon.ico</Image>
-<Url type="text/html" method="get" template="https://dokucraft.co.uk/stash/?search={searchTerms}"/>
+<Image width="16" height="16" type="image/x-icon">https://stash.dokucraft.co.uk/favicon.ico</Image>
+<Url type="text/html" method="get" template="https://stash.dokucraft.co.uk/?search={searchTerms}"/>
 </OpenSearchDescription>
